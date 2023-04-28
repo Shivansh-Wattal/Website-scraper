@@ -1,32 +1,70 @@
-"""
-A simple web scraper built using BeautifulSSoup.
-Scraping a sample website for job postings.
-"""
 from bs4 import BeautifulSoup
 import requests
 
-def job_info():
-    with open("job info.txt","a")as f:
-        print("input skill you do not have:")
-        not_skilled=input()
-        print("Please wait:\n")
-        html_txt=requests.get("https://www.timesjobs.com/candidate/job-search.html?searchType=personalizedSearch&from=submit&txtKeywords=python&txtLocation=").text
-        soup = BeautifulSoup(html_txt,'lxml')
-        jobs=soup.find_all("li",class_="clearfix job-bx wht-shd-bx")
-        for job in jobs:
-            publish_date=job.find("span",class_="sim-posted").text
-            if "few" in publish_date:
-                skills=job.find("span",class_="srp-skills").text
-                company_name=job.find("h3",class_="joblist-comp-name").text
-                details=job.header.h2.a["href"]
-                if not_skilled not in skills:
-                    print(company_name.strip())
-                    print(skills.strip())
-                    print(details)
-                    print(" ")
-                    f.write(f"Company name: {company_name.strip()}\n")
-                    f.write(f"Skills required: {skills.strip()}\n")
-                    f.write(f"Link for details: {details}\n\n")
-    f.close()
+def med_info():
+    salt = input()
+    html_text = requests.get("https://www.apollopharmacy.in/salt/"+salt).text
+    soup = BeautifulSoup(html_text,'lxml')
+    info = soup.find_all("div", class_="ProductDetailsGeneric_descListing__w3wG3")
+    h2_1 = info[0].h2.text
+    print(h2_1)
+    print()
+    h2_data_1 = info[0].p.text
+    print(h2_data_1)
+    print()
+    print()
 
-job_info()
+    info = soup.find_all("div",class_="ProductDetailsGeneric_descListing__w3wG3")
+    h2_1 = info[1].h2.text
+    print(h2_1)
+    print()
+    h2_data_1 = info[1].p.text
+    print(h2_data_1)
+    print()
+    print()
+
+    info = soup.find_all("div", class_="ProductDetailsGeneric_descListing__w3wG3")
+    h2_1 = info[2].h2.text
+    print(h2_1)
+    print()
+    h2_data_1 = info[2].p.text
+    print(h2_data_1)
+    print()
+    print()
+
+    info = soup.find_all("div", class_="ProductDetailsGeneric_descListing__w3wG3")
+    h2_1 = info[3].h2.text
+    print(h2_1)
+    print()
+    h2_data_1 = info[3].div.text
+    print(h2_data_1)
+    print()
+    print()
+
+    info = soup.find_all("div", class_="ProductDetailsGeneric_descListing__w3wG3")
+    h2_1 = info[4].h2.text
+    print(h2_1)
+    print()
+    h2_data_1 = info[4].div.text
+    print(h2_data_1)
+    print()
+    print()
+
+    info = soup.find_all("div", class_="ProductDetailsGeneric_descListing__w3wG3")
+    h2_1 = info[5].h2.text
+    print(h2_1)
+    h2_data_1 = info[5].div.text
+    print(h2_data_1)
+
+    print("List of medicines : ")
+    print()
+
+    med_cards = soup.find_all("div",class_="SaltMedicines_saltLink__7cBrq")
+    for med in med_cards:
+        name = med.p.text
+        price = med.find("span",class_="SaltMedicines_mrpBx__mwrKA").text
+        print("Name of medicine : " + name)
+        print("Price of medicine : " + price)
+
+med_info()
+
